@@ -16,7 +16,14 @@ indirect enum myTree <A> {
 
 extension myTree {
     
-    static func insert<T: NumericType>(acc: myTree<T>, value: T) -> myTree<T> {
+    static func apply<T: NumericType>(value: T) -> myTree<T> {
+        return .Cons(value, left: .Nil, right: .Nil)
+    }
+}
+
+extension myTree {
+    
+    func insert<T: NumericType>(acc: myTree<T>, value: T) -> myTree<T> {
         
         switch acc {
         case let .Cons(element, leftTree, rightTree):
@@ -27,7 +34,7 @@ extension myTree {
                 return .Cons(element, left: insert(acc: rightTree, value: value), right: rightTree)
                 
             } else {
-                return .Cons(value, left: leftTree, right: rightTree)
+                return acc
             }
             
         default:
@@ -35,7 +42,7 @@ extension myTree {
         }
     }
     
-    static func contains<T: NumericType>(acc: myTree<T>, value: T) -> Bool {
+    func contains<T: NumericType>(acc: myTree<T>, value: T) -> Bool {
         
         switch acc {
         case let .Cons(element, leftTree, rightTree):
